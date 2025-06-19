@@ -9,6 +9,7 @@
   --border: #e0e0e0;
   --shadow: rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
+  --option-font-size: 1.15rem;
 }
 
 [data-theme="dark"] {
@@ -140,7 +141,7 @@ body {
 }
 
 #practice-question-text {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: var(--text-color);
   font-weight: 500;
@@ -163,6 +164,7 @@ body {
   text-align: left;
   cursor: pointer;
   transition: var(--transition);
+  font-size: var(--option-font-size);
 }
 
 #practice-options-container button:hover {
@@ -234,7 +236,7 @@ body {
 }
 
 #exam-question-text {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin-bottom: 1.5rem;
   color: var(--text-color);
   font-weight: 500;
@@ -257,6 +259,7 @@ body {
   text-align: left;
   cursor: pointer;
   transition: var(--transition);
+  font-size: var(--option-font-size);
 }
 
 #exam-options-container button:hover {
