@@ -1,69 +1,157 @@
 :root {
-  --bg-color: #f8f9fa;       /* Светлый фон */
-  --text-color: #333;        /* Тёмный, но не чёрный текст */
-  --primary: #4e73df;        /* Основной синий (не агрессивный) */
-  --primary-hover: #3a5bd9;  /* Для hover-эффектов */
-  --correct: #2ecc71;        /* Зелёный для правильных ответов */
-  --incorrect: #e74c3c;      /* Красный для ошибок */
-  --card-bg: #ffffff;        /* Белый фон карточек */
-  --border: #e0e0e0;         /* Светлые границы */
+  --bg-color: #f8f9fa;
+  --text-color: #333;
+  --primary: #4e73df;
+  --primary-hover: #3a5bd9;
+  --correct: #2ecc71;
+  --incorrect: #e74c3c;
+  --card-bg: #ffffff;
+  --border: #e0e0e0;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
 }
 
 [data-theme="dark"] {
-    /* Тёмная тема */
-    --bg-color: #121212;
-    --text-color: #f0f0f0;
-    --card-bg: #1e1e1e;
-    --border: #444;
-    --shadow: rgba(0, 0, 0, 0.3);
+  --bg-color: #121212;
+  --text-color: #f0f0f0;
+  --primary: #5d8aff;
+  --primary-hover: #4a79ff;
+  --card-bg: #1e1e1e;
+  --border: #444;
+  --shadow: rgba(0, 0, 0, 0.3);
 }
 
-
+/* Base Styles */
 body {
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.6;          /* Улучшает читаемость */
-  font-size: 18px;           /* Оптимальный размер */
-  font-weight: 400;          /* Не слишком тонкий */
+  line-height: 1.6;
+  font-size: 16px;
+  font-weight: 400;
   color: var(--text-color);
   background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
+  margin: 0;
+  padding: 0;
+  transition: var(--transition);
 }
 
-.container {
-    background: var(--card-bg);
-    box-shadow: 0 4px 6px var(--shadow);
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
 }
 
+/* Theme Toggle */
 #theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: transform 0.3s ease;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 100;
+  color: var(--text-color);
 }
 
-#theme-toggle:hover {
-    transform: scale(1.1);
+/* Screens */
+.screen {
+  display: none;
+  animation: fadeIn 0.5s ease-out;
 }
 
-#question-container {
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mode Selection Screen */
+#mode-screen {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.mode-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.mode-btn {
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  background: var(--card-bg);
+  border: 2px solid var(--primary);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.mode-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow);
+}
+
+.mode-btn span {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.mode-btn p {
+  color: var(--text-color);
+  opacity: 0.8;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Practice Screen */
+#practice-screen .container {
   background: var(--card-bg);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px var(--shadow);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#practice-progress-bar {
+  height: 6px;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
   margin-bottom: 1.5rem;
 }
 
-#question {
-  font-size: 1.4rem;
+#practice-question-text {
+  font-size: 1.3rem;
   margin-bottom: 1.5rem;
   color: var(--text-color);
   font-weight: 500;
+  line-height: 1.4;
 }
 
-#options button {
+#practice-options-container {
+  margin: 1.5rem 0;
+}
+
+#practice-options-container button {
   display: block;
   width: 100%;
   padding: 1rem;
@@ -71,96 +159,271 @@ body {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--card-bg);
+  color: var(--text-color);
   text-align: left;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
-#options button:hover {
-  background: #f1f3f9;
-  border-color: var(--primary);
-}
-
-#options button.selected {
+#practice-options-container button:hover {
   background: var(--primary);
   color: white;
   border-color: var(--primary);
 }
 
-[data-theme="dark"] #options button {
-    color: var(--text-color);
-    background: var(--card-bg);
-    border-color: var(--border);
+#practice-options-container button:disabled {
+  cursor: not-allowed;
 }
 
-[data-theme="dark"] #options button:hover {
-    background: #2a2a2a;
+#practice-next-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  margin: 1rem auto 0;
+  display: block;
 }
 
-* {
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+#practice-next-btn:hover {
+  background: var(--primary-hover);
 }
 
-#next-button {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-    background: var(--primary);
-    color: white;
-    border: none;
+#practice-next-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.practice-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+/* Exam Screen */
+#exam-screen {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.exam-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+#timer {
+  color: var(--incorrect);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+#question-counter {
+  font-weight: 500;
+}
+
+#exam-question-text {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+#exam-options-container {
+  margin: 1.5rem 0;
+}
+
+#exam-options-container button {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#exam-options-container button:hover {
+  background: rgba(78, 115, 223, 0.1);
+}
+
+#exam-options-container button.selected {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+#exam-next-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  margin: 1rem auto 0;
+  display: block;
+}
+
+#exam-next-btn:hover {
+  background: var(--primary-hover);
+}
+
+#exam-next-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Result Screen */
+#result-screen {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+#result-content {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 6px var(--shadow);
+}
+
+#restart-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  margin: 1rem auto 0;
+}
+
+#restart-btn:hover {
+  background: var(--primary-hover);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mode-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  #practice-screen .container,
+  #exam-screen {
+    padding: 1rem;
+  }
+  
+  #practice-question-text,
+  #exam-question-text {
+    font-size: 1.1rem;
+  }
+  
+  .exam-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.exam-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.secondary-btn {
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
     border-radius: 8px;
     padding: 12px 24px;
-
     font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: all 0.3s ease;
-    transform: translateY(0);
-    display: block;
-    margin: 20px auto 0;
-    width: fit-content;
-    min-width: 120px;
-    text-align: center;
 }
 
-#next-button:hover {
-    background: var(--primary-hover);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+.secondary-btn:hover {
+    background: #e0e0e0;
+}
+
+[data-theme="dark"] .secondary-btn {
+    background: #2a2a2a;
+    color: #f0f0f0;
+    border-color: #444;
+}
+
+[data-theme="dark"] .secondary-btn:hover {
+    background: #333;
+}
+
+.finish-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    margin-left: 10px; /* Отступ от соседней кнопки */
+}
+
+/* Для светлой темы */
+.finish-btn {
+    background-color: #e74c3c; /* Красный цвет для действия "завершить" */
+    color: white;
+}
+
+/* Для темной темы */
+[data-theme="dark"] .finish-btn {
+    background-color: #c0392b;
+    color: #f0f0f0;
+}
+
+/* Состояния кнопки */
+.finish-btn:hover {
+    background-color: #c0392b;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#next-button:active {
+.finish-btn:active {
     transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#next-button:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
-    transform: none !important;
-    box-shadow: none;
-    opacity: 0.7;
-}
-
-
-.progress-bar {
-  height: 6px;
-  background: var(--border);
-  border-radius: 3px;
-  margin-bottom: 2rem;
-}
-
-.progress {
-  height: 100%;
+#early-finish-btn, #practice-finish-btn {
   background: var(--primary);
-  border-radius: 3px;
-  transition: width 0.4s ease;
-}
-
-#progress-counter {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    opacity: 0.8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  margin: 1rem auto 0;
+  display: block;
 }

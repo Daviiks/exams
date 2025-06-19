@@ -10,20 +10,58 @@
     </button>
 </head>
 <body>
-    <div class="container">
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-            <div id="progress-counter">Вопрос 1 из 10</div>
-        </div>
-        
-        <div id="question-container">
-            <div id="question"></div>
-            <div id="options"></div>
+    <div id="app">
+    <!-- Главный экран выбора режима -->
+        <div id="mode-screen" class="screen active">
+            <h1>Выберите режим тестирования</h1>
+            <div class="mode-buttons">
+                <button id="practice-btn" class="mode-btn">
+                    <span>Обычный тест</span>
+                    <p>Все вопросы, без ограничений</p>
+                </button>
+                <button id="exam-btn" class="mode-btn">
+                    <span>Экзамен</span>
+                    <p>40 случайных вопросов, 60 минут</p>
+                </button>
+            </div>
         </div>
 
-        <button id="next-button" disabled>Далее →</button>
-        <div id="result"></div>
+    <!-- Экран обычного теста -->
+    <div id="practice-screen" class="screen">
+        <div class="container">
+            <div class="progress-bar">
+                <div class="progress" id="practice-progress-bar"></div>
+                <div id="progress-counter"></div>
+            </div>
+            <div id="question-container">
+                <div id="practice-question-text"></div>
+                <div id="practice-options-container"></div>
+            </div>
+            <button id="practice-next-btn">Далее →</button>
+            <button id="practice-finish-btn" class="secondary-btn">Завершить практику</button>
+        </div>
     </div>
+
+    <!-- Экран экзамена -->
+    <div id="exam-screen" class="screen">
+        <div class="exam-header">
+            <div id="timer">Осталось: 60:00</div>
+            <div id="question-counter">Вопрос 1/40</div>
+        </div>
+        <div id="exam-question-container">
+            <div id="exam-question-text"></div>
+            <div id="exam-options-container"></div>
+        </div>
+        <button id="exam-next-btn" disabled>Следующий вопрос</button>
+        <button id="early-finish-btn" class="secondary-btn">Завершить экзамен</button>
+    </div>
+
+    <!-- Экран результатов -->
+    <div id="result-screen" class="screen">
+        <h2>Результаты</h2>
+        <div id="result-content"></div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
